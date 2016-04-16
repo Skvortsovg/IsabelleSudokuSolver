@@ -1,0 +1,293 @@
+theory Sudoku
+imports Main
+
+begin
+
+definition valid :: "[nat, nat, nat, nat, nat, nat, nat, nat, nat] \<Rightarrow> bool" where
+"valid e1 e2 e3 e4 e5 e6 e7 e8 e9 ==
+(e1 \<noteq> e2) \<and> (e1 \<noteq> e3) \<and> (e1 \<noteq> e4) \<and> (e1 \<noteq> e5) \<and> (e1 \<noteq> e6) \<and> (e1 \<noteq> e7) \<and> (e1 \<noteq> e8) \<and> (e1 \<noteq> e9) \<and> 
+(e2 \<noteq> e3) \<and> (e2 \<noteq> e4) \<and> (e2 \<noteq> e5) \<and> (e2 \<noteq> e6) \<and> (e2 \<noteq> e7) \<and> (e2 \<noteq> e8) \<and> (e2 \<noteq> e9) \<and> 
+(e3 \<noteq> e4) \<and> (e3 \<noteq> e5) \<and> (e3 \<noteq> e6) \<and> (e3 \<noteq> e7) \<and> (e3 \<noteq> e8) \<and> (e3 \<noteq> e9) \<and> 
+(e4 \<noteq> e5) \<and> (e4 \<noteq> e6) \<and> (e4 \<noteq> e7) \<and> (e4 \<noteq> e8) \<and> (e4 \<noteq> e9) \<and> 
+(e5 \<noteq> e6) \<and> (e5 \<noteq> e7) \<and> (e5 \<noteq> e8) \<and> (e5 \<noteq> e9) \<and> 
+(e6 \<noteq> e7) \<and> (e6 \<noteq> e8) \<and> (e6 \<noteq> e9) \<and> 
+(e7 \<noteq> e8) \<and> (e7 \<noteq> e9) \<and> 
+(e8 \<noteq> e9) \<and> 
+(e1 < 10) \<and> (e2 < 10) \<and> (e3 < 10) \<and> (e4 < 10) \<and> (e5 < 10)
+\<and> (e6 < 10) \<and> (e7 < 10) \<and> (e8 < 10) \<and> (e9 < 10)  \<and>
+(e1 \<ge> 1) \<and> (e2  \<ge> 1) \<and> (e3  \<ge> 1) \<and> (e4  \<ge> 1) \<and> (e5  \<ge> 1)
+\<and> (e6 \<ge> 1) \<and> (e7 \<ge> 1) \<and> (e8  \<ge> 1) \<and> (e9  \<ge> 1)"
+
+definition sudoku :: "[nat, nat, nat, nat, nat, nat, nat, nat, nat, 
+                       nat, nat, nat, nat, nat, nat, nat, nat, nat,
+                       nat, nat, nat, nat, nat, nat, nat, nat, nat,
+                       nat, nat, nat, nat, nat, nat, nat, nat, nat,
+                       nat, nat, nat, nat, nat, nat, nat, nat, nat,
+                       nat, nat, nat, nat, nat, nat, nat, nat, nat,
+                       nat, nat, nat, nat, nat, nat, nat, nat, nat,
+                       nat, nat, nat, nat, nat, nat, nat, nat, nat,
+                       nat, nat, nat, nat, nat, nat, nat, nat, nat] \<Rightarrow> bool" where
+  
+  "sudoku e11 e12 e13 e14 e15 e16 e17 e18 e19 
+          e21 e22 e23 e24 e25 e26 e27 e28 e29 
+          e31 e32 e33 e34 e35 e36 e37 e38 e39 
+          e41 e42 e43 e44 e45 e46 e47 e48 e49 
+          e51 e52 e53 e54 e55 e56 e57 e58 e59 
+          e61 e62 e63 e64 e65 e66 e67 e68 e69 
+          e71 e72 e73 e74 e75 e76 e77 e78 e79 
+          e81 e82 e83 e84 e85 e86 e87 e88 e89 
+          e91 e92 e93 e94 e95 e96 e97 e98 e99  ==
+
+          valid e11 e12 e13 e14 e15 e16 e17 e18 e19 
+   \<and> valid e21 e22 e23 e24 e25 e26 e27 e28 e29 
+   \<and> valid e31 e32 e33 e34 e35 e36 e37 e38 e39 
+   \<and> valid e41 e42 e43 e44 e45 e46 e47 e48 e49 
+   \<and> valid e51 e52 e53 e54 e55 e56 e57 e58 e59 
+   \<and> valid e61 e62 e63 e64 e65 e66 e67 e68 e69 
+   \<and> valid e71 e72 e73 e74 e75 e76 e77 e78 e79 
+   \<and> valid e81 e82 e83 e84 e85 e86 e87 e88 e89 
+   \<and> valid e91 e92 e93 e94 e95 e96 e97 e98 e99 
+
+   \<and> valid e11 e21 e31 e41 e51 e61 e71 e81 e91 
+   \<and> valid e12 e22 e32 e42 e52 e62 e72 e82 e92 
+   \<and> valid e13 e23 e33 e43 e53 e63 e73 e83 e93 
+   \<and> valid e14 e24 e34 e44 e54 e64 e74 e84 e94 
+   \<and> valid e15 e25 e35 e45 e55 e65 e75 e85 e95 
+   \<and> valid e16 e26 e36 e46 e56 e66 e76 e86 e96 
+   \<and> valid e17 e27 e37 e47 e57 e67 e77 e87 e97 
+   \<and> valid e18 e28 e38 e48 e58 e68 e78 e88 e98 
+   \<and> valid e19 e29 e39 e49 e59 e69 e79 e89 e99 
+
+   \<and> valid e11 e12 e13 e21 e22 e23 e31 e32 e33
+   \<and> valid e41 e42 e43 e51 e52 e53 e61 e62 e63
+   \<and> valid e71 e72 e73 e81 e82 e83 e91 e92 e93
+   \<and> valid e14 e15 e16 e24 e25 e26 e34 e35 e36
+   \<and> valid e44 e45 e46 e54 e55 e56 e64 e65 e66
+   \<and> valid e74 e75 e76 e84 e85 e86 e94 e95 e96
+   \<and> valid e17 e18 e19 e27 e28 e29 e37 e38 e39
+   \<and> valid e47 e48 e49 e57 e58 e59 e67 e68 e69
+   \<and> valid e77 e78 e79 e87 e88 e89 e97 e98 e99"
+(*
+(*Пустое судоку*)
+lemma test10: "~ sudoku
+    e11 e12 e13 e14 e15 e16 e17 e18 e19 
+    e21 e22 e23 e24 e25 e26 e27 e28 e29 
+    e31 e32 e33 e34 e35 e36 e37 e38 e39 
+    e41 e42 e43 e44 e45 e46 e47 e48 e49 
+    e51 e52 e53 e54 e55 e56 e57 e58 e59 
+    e61 e62 e63 e64 e65 e66 e67 e68 e69 
+    e71 e72 e73 e74 e75 e76 e77 e78 e79 
+    e81 e82 e83 e84 e85 e86 e87 e88 e89 
+    e91 e92 e93 e94 e95 e96 e97 e98 e99 "
+nitpick[verbose] (*7,3 секунды*)
+
+(* Обычно судоку подразделяют на 3 уровня сложности:
+  легкий - 30-35 "подсказок"
+  средний - 25-30 "подсказок"
+  трудный - 20-25 "подсказок"
+  Рассмотрим несколько судоку из этих типов, а также несколько 
+  пустых судоку, судоку с одной цифрой и судоку без одной цифры *)
+
+(*легкие судоку*)
+
+lemma test20: "~ sudoku
+    e11  4   6   5   1  e16  3  e18  9  
+    e21 e22 e23  7  e25 e26 e27 e28  2  
+     1  e32 e33  3   8  e36 e37 e38 e39 
+     3  e42 e43  6   7  e46 e47 e48 e49 
+    e51  5  e53 e54 e55 e56 e57 e58 e59 
+     6   7   4  e64 e65 e66 e67  9  e69 
+     5  e72 e73  9   3  e76  4  e78  7  
+    e81  6   7   2   5   1  e87  3  e89 
+     8  e92 e93  4  e95 e96 e97  5  e99 "
+nitpick[verbose] (*11,2 секунды*)
+
+lemma test21: "~ sudoku
+    e11 e12 e13 e14 e15  4   9  e18 e19 
+     1  e22 e23 e24 e25 e26  6   4  e29 
+    e31 e32  4   6   5  e36  1  e38 e39 
+    e41  2   1  e44 e45  9  e47  8  e49 
+    e51 e52 e53 e54 e55  1  e57 e58 e59 
+    e61 e62  9  e64  7  e66  4  e68  6  
+    e71 e72  6   3  e75  5  e77  9  e79 
+     9  e82  5  e84 e85 e86 e87  6  e89 
+    e91  1   2  e94  9   6  e97 e98 e99 "
+nitpick[verbose] (*11,1 секунды*)
+
+lemma test22: "~ sudoku
+    e11 e12  4   7  e15  9  e17 e18 e19 
+    e21 e22  5  e24 e25  2   1  e28 e29 
+    e31 e32  9  e34 e35  1  e37 e38 e39 
+     2   8   3   4   1  e46  9   6   5  
+    e51 e52 e53  2   3  e56  8  e58 e59 
+    e61  5  e63 e64 e65 e66  2  e68 e69 
+    e71 e72 e73 e74 e75 e76 e77 e78 e79 
+    e81 e82  8  e84 e85  3   5   2   6  
+     5  e92 e93  1   8   6  e97  9  e99 "
+nitpick[verbose] (*11,5 секунды*)
+(*Средние судоку*)
+lemma test30: "~ sudoku
+    e11  2  e13 e14 e15 e16  8   5  e19 
+     7  e22 e23 e24  5   6   4  e28  3  
+    e31 e32 e33  8  e35 e36 e37 e38  9  
+     6   7   8  e44 e45  1   9  e48 e49 
+    e51  3  e53  7  e55 e56 e57  6  e59 
+    e61  4   5   9  e65 e66 e67 e68 e69 
+    e71 e72  7   6   8   5  e77  1  e79 
+    e81 e82 e83  2  e85  4  e87  8  e89 
+    e91  6  e93  3  e95 e96  2   9  e99 "
+nitpick[verbose] (*11,2 секунды*)
+
+lemma test31: "~ sudoku
+    e11 e12 e13 e14 e15 e16 e17  1  e19 
+    e21 e22 e23 e24  5  e26 e27  4   9 
+     8   2   9   4  e35  1   5   7   6  
+    e41 e42 e43  7  e45 e46  9   5  e49 
+    e51  6  e53  9   1  e56  2   3  e59 
+    e61 e62  1   3   2  e66  6  e68  7  
+     5  e72  6  e74 e75 e76 e77 e78 e79 
+     1  e82 e83 e84  4   6   7  e88 e89 
+     2  e92 e93  5   7  e96 e97 e98  8  "
+nitpick[verbose] (*11,7 секунды*)
+
+lemma test32: "~ sudoku
+     9   1  e13 e14  6   4  e17  8  e19 
+    e21 e22 e23 e24  1  e26 e27 e28 e29 
+    e31 e32 e33  8  e35  7  e37  4  e39 
+     2  e42 e43 e44 e45  1  e47 e48  8  
+    e51 e52 e53 e54  9  e56 e57 e58 e59 
+    e61 e62 e63 e64 e65 e66 e67  2  e69 
+    e71 e72  3   5  e75  9   7   6  e79 
+     5   7  e83 e84 e85 e86  4  e88 e89 
+     1  e92 e93 e94  7  e96  8  e98  3  "
+nitpick[verbose] (*11,5 секунды*)
+
+
+(*Трудные судоку*)
+
+lemma test40: "~ sudoku
+    e11  4  e13  5  e15  2  e17 e18 e19 
+    e21 e22  7  e24  3  e26 e27  9  e29 
+    e31  3  e33  1   9  e36 e37  2  e39 
+    e41  5  e43 e44 e45 e46 e47  6   3  
+     7  e52 e53  4  e55 e56 e57 e58 e59 
+     6   2  e63 e64 e65  9  e67  5  e69 
+    e71 e72 e73 e74 e75  1  e77 e78 e79 
+    e81 e82 e83  2  e85 e86 e87  3  e89 
+    e91 e92 e93 e94  6  e96  7   1  e99 "
+nitpick[verbose] (*12,0 секунды*)
+*)
+(*
+lemma test41: "~ sudoku
+     6  e12  5  e14  2  e16 e17  9  e19 
+    e21 e22 e23  6  e25  7  e27 e28 e29 
+    e31 e32 e33 e34 e35 e36 e37 e38  5  
+    e41 e42  2  e44 e45 e46 e47 e48  4  
+     9  e52  8  e54  1  e56 e57 e58 e59 
+    e61  7  e63  5   9  e66  2  e68 e69 
+     1  e72 e73 e74 e75  3  e77 e78  7  
+    e81  3  e83 e84  4  e86 e87 e88 e89 
+    e91  9  e93 e94 e95 e96 e97 e98 e99 "
+nitpick[verbose] (*12,1 секунды*)
+(*
+lemma test42: "~ sudoku
+    e11  2  e13 e14  6  e16 e17 e18 e19 
+     7  e22 e23 e24 e25 e26 e27  5   3  
+    e31 e32 e33  4  e35  1  e37 e38 e39 
+     2  e42  1  e44 e45 e46 e47  9  e49 
+    e51 e52 e53  3  e55 e56 e57 e58  4  
+     8  e62 e63 e64 e65  2  e67 e68 e69 
+    e71 e72  5  e74 e75 e76 e77 e78  8 
+    e81 e82 e83 e84 e85  8  e87  3   6  
+     3   6  e93 e94 e95 e96 e97  4   7  "
+nitpick[verbose] (*12,7 секунды*)   *)
+
+(* Судоку с одной случайной цифрой *)
+lemma test50: "~ sudoku
+    e11 e12 e13 e14 e15 e16 e17 e18 e19 
+    e21  1  e23 e24 e25 e26 e27 e28 e29 
+    e31 e32 e33 e34 e35 e36 e37 e38 e39 
+    e41 e42 e43 e44 e45 e46 e47 e48 e49 
+    e51 e52 e53 e54 e55 e56 e57 e58 e59 
+    e61 e62 e63 e64 e65 e66 e67 e68 e69 
+    e71 e72 e73 e74 e75 e76 e77 e78 e79 
+    e81 e82 e83 e84 e85 e86 e87 e88 e89 
+    e91 e92 e93 e94 e95 e96 e97 e98 e99 "
+nitpick[verbose] (*7,5 секунды*)
+
+lemma test51: "~ sudoku
+    e11 e12 e13 e14 e15 e16 e17 e18 e19 
+    e21 e22 e23 e24 e25 e26 e27 e28 e29 
+    e31 e32 e33 e34 e35 e36 e37 e38 e39 
+    e41 e42 e43 e44 e45 e46 e47 e48 e49 
+    e51 e52 e53 e54 e55 e56 e57 e58 e59 
+    e61 e62 e63 e64 e65 e66  6  e68 e69 
+    e71 e72 e73 e74 e75 e76 e77 e78 e79 
+    e81 e82 e83 e84 e85 e86 e87 e88 e89 
+    e91 e92 e93 e94 e95 e96 e97 e98 e99 "
+nitpick[verbose] (*7,8 секунды*)
+
+lemma test52: "~ sudoku
+    e11 e12 e13 e14 e15 e16 e17 e18 e19 
+    e21 e22 e23 e24 e25 e26 e27 e28 e29 
+    e31 e32 e33 e34 e35 e36 e37 e38 e39 
+    e41 e42 e43 e44 e45 e46 e47 e48 e49 
+    e51 e52 e53 e54 e55 e56 e57 e58 e59 
+    e61 e62 e63 e64 e65 e66 e67 e68 e69 
+    e71 e72 e73 e74 e75 e76 e77 e78 e79 
+    e81 e82 e83 e84 e85 e86 e87 e88 e89 
+     4  e92 e93 e94 e95 e96 e97 e98 e99 "
+nitpick[verbose] (*7,1 секунды*)
+
+(*Судоку без одной случайной цифры*)
+
+lemma test60: "~ sudoku
+   e11  5   9   4   3   1   6   7   8 
+    3   7   6   5   2   8   1   9   4 
+    1   8   4   9   6   7   3   2   5 
+    8   9   7   6   5   4   2   3   1 
+    6   4   2   8   1   3   9   5   7 
+    5   1   3   2   7   9   8   4   6 
+    9   6   1   3   4   5   7   8   2 
+    4   2   8   7   9   6   5   1   3 
+    7   3   5   1   8   2   4   6   9 "
+nitpick[verbose] (*10,2 секунды*)
+
+lemma test61: "~ sudoku
+    7   9   5   3   8   4   1   6   2 
+    1   4   8   7   2   6   9   3   5 
+    2   3   6   5   1   9   4   8   7 
+    3   7   1   2   5   8   6   4   9 
+    6   5   4   9   3   1   7   2   8 
+    9  e62  2   6   4   7   3   5   1 
+    5   6   3   1   9   2   8   7   4 
+    4   1   7   8   6   5   2   9   3 
+    8   2   9   4   7   3   5   1   6"
+nitpick[verbose] (*10,3 секунды*)
+
+lemma test62: "~ sudoku
+    4   3   6   8   2   5   7   9   1 
+    5   7   1   6   9   4   8   3   2 
+    2   8   9   1   7   3   6   5   4 
+    1   4   3   7   5   2   9  e48  8 
+    8   2   7   9   1   6   5   4   3 
+    6   9   5   3   4   8   2   1   7 
+    3   6   2   5   8   1   4   7   9 
+    7   1   4   2   6   9   3   8   5 
+    9   5   8   4   3   7   1   2   6 "
+nitpick[verbose] (*9,9 секунды*)
+*)
+
+lemma test41: "~ sudoku
+    e11 e12 e13 e14 e15 e16 e17 e18 e19 
+    e21 e22 e23 e24 e25 e26 e27 e28 e29 
+    e31 e32 e33 e34 e35 e36 e37 e38 e39 
+    e41 e42 e43 e44 e45 e46 e47 e48 e49 
+    e51 e52 e53 e54 e55 e56 e57 e58 e59 
+    e61 e62 e63 e64 e65 e66 e67 e68 e69 
+    e71 e72 e73 e74 e75 e76 e77 e78 e79  
+    e81 e82 e83 e84 e85 e86 e87 e88 e89 
+    e91 e92 e93 e94 e95 e96 e97 e98 e99 "
+nitpick[verbose] (*12,1 секунды*)
+
+end

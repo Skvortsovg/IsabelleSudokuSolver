@@ -1,0 +1,15 @@
+
+definition valid :: "[nat, nat, nat, nat, nat, nat, nat, nat, nat] \<Rightarrow> bool" where
+"valid e1 e2 e3 e4 e5 e6 e7 e8 e9 ==
+(e1 \<noteq> e2) \<and> (e1 \<noteq> e3) \<and> (e1 \<noteq> e4) \<and> (e1 \<noteq> e5) \<and> (e1 \<noteq> e6) \<and> (e1 \<noteq> e7) \<and> (e1 \<noteq> e8) \<and> (e1 \<noteq> e9) \<and> 
+(e2 \<noteq> e3) \<and> (e2 \<noteq> e4) \<and> (e2 \<noteq> e5) \<and> (e2 \<noteq> e6) \<and> (e2 \<noteq> e7) \<and> (e2 \<noteq> e8) \<and> (e2 \<noteq> e9) \<and> 
+(e3 \<noteq> e4) \<and> (e3 \<noteq> e5) \<and> (e3 \<noteq> e6) \<and> (e3 \<noteq> e7) \<and> (e3 \<noteq> e8) \<and> (e3 \<noteq> e9) \<and> 
+(e4 \<noteq> e5) \<and> (e4 \<noteq> e6) \<and> (e4 \<noteq> e7) \<and> (e4 \<noteq> e8) \<and> (e4 \<noteq> e9) \<and> 
+(e5 \<noteq> e6) \<and> (e5 \<noteq> e7) \<and> (e5 \<noteq> e8) \<and> (e5 \<noteq> e9) \<and> 
+(e6 \<noteq> e7) \<and> (e6 \<noteq> e8) \<and> (e6 \<noteq> e9) \<and> 
+(e7 \<noteq> e8) \<and> (e7 \<noteq> e9) \<and> 
+(e8 \<noteq> e9) \<and> 
+(e1 < 10) \<and> (e2 < 10) \<and> (e3 < 10) \<and> (e4 < 10) \<and> (e5 < 10)
+\<and> (e6 < 10) \<and> (e7 < 10) \<and> (e8 < 10) \<and> (e9 < 10)  \<and>
+(e1 \<ge> 1) \<and> (e2  \<ge> 1) \<and> (e3  \<ge> 1) \<and> (e4  \<ge> 1) \<and> (e5  \<ge> 1)
+\<and> (e6 \<ge> 1) \<and> (e7 \<ge> 1) \<and> (e8  \<ge> 1) \<and> (e9  \<ge> 1)"
